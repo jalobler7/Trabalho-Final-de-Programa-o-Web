@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>Consultas Médicas</h2>
+  <button class="btn btn-primary" (click)="openModal()">Adicionar Consulta</button>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Título</th>
+      <th>Data</th>
+      <th>Nome do Paciente</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let consulta of consultas">
+      <td>{{ consulta.titulo }}</td>
+      <td>{{ consulta.data }}</td>
+      <td>{{ consulta.nomePaciente }}</td>
+      <td>{{ consulta.descricao }}</td>
+      <td>
+        <button class="btn btn-warning rounded-circle" (click)="carregarDadosConsulta(consulta)">Editar</button>
+        <button class="btn btn-warning rounded-circle" (click)="consulta.id !== undefined ? excluirConsulta(consulta.id) : null">Excluir</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div id="add-consulta" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <div>
+          <label for="titulo">Título</label>
+          <input id="titulo" formControlName="titulo" type="text" required>
+          <div *ngIf="isCampoValido('titulo')">
+            <small class="error">Campo obrigatório</small>
+          </div>
+        </div>
+        <div>
+          <label for="data">Data</label>
+          <input id="data" formControlName="data" type="date" required>
+          <div *ngIf="isCampoValido('data')">
+            <small class="error">Campo obrigatório</small>
+          </div>
+        </div>
+        <div>
+          <label for="nomePaciente">Nome do Paciente</label>
+          <input id="nomePaciente" formControlName="nomePaciente" type="text" required>
+          <div *ngIf="isCampoValido('nomePaciente')">
+            <small class="error">Campo obrigatório</small>
+          </div>
+        </div>
+        <div>
+          <label for="descricao">Descrição</label>
+          <input id="descricao" formControlName="descricao" type="text" required>
+          <div *ngIf="isCampoValido('descricao')">
+            <small class="error">Campo obrigatório</small>
+          </div>
+        </div>
+        <div>
+          <label for="imagem">Imagem</label>
+          <input id="imagem" type="file" (change)="onFileChange($event)">
+        </div>
+        <button type="submit" [disabled]="form.invalid">Salvar</button>
+      </form>
+    </div>
+  </div>
+</div>
